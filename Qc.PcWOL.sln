@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29411.108
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qc.PcWOL", "Qc.PcWOL\Qc.PcWOL.csproj", "{2F82F642-4AFF-4A85-BE5E-977C1B6D5954}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2F82F642-4AFF-4A85-BE5E-977C1B6D5954}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F82F642-4AFF-4A85-BE5E-977C1B6D5954}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F82F642-4AFF-4A85-BE5E-977C1B6D5954}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F82F642-4AFF-4A85-BE5E-977C1B6D5954}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3EBDD43C-9E25-4862-BE9A-B8F83B9C9A6D}
+	EndGlobalSection
+EndGlobal

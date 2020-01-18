@@ -1,0 +1,106 @@
+﻿@using Microsoft.Extensions.Options;
+@using Qc.PcWOL.Models;
+@inject IOptionsSnapshot<SystemSetting> options
+@{
+    Layout = null;
+}
+
+
+<html>
+<head>
+    <title>@(options?.Value?.Title)</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <style>
+        .hideMe {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12" role="main">
+                <h1><span class="fa fa-desktop"></span> <small> 远程唤醒你正在沉睡的电脑 </small></h1>
+                <div id="snackbar" class="alert hideMe">
+                    Message comes here
+                </div>
+                <table class="table" style="max-width:500px">
+                    <thead>
+                        <tr>
+                            <th>计算机名称</th>
+                            <th>MAC地址</th>
+                            <th>唤醒</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (options.Value?.MacList?.Count > 0)
+                        {
+                            foreach (var item in options.Value.MacList)
+                            {
+                                <tr>
+                                    <td class="align-middle">@(item.NickName)</td>
+                                    <td class="align-middle">@(item.MacAddress)</td>
+                                    <td class="align-middle"><b><button id="bn_yimo" name="wolbutton" value="yimo" class="btn btn-success btn-sm" onclick="$.wakeUpComputerByName('@(item.MacAddress)')">唤醒</button></b></td>
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+                </table>
+
+                <hr />
+                <p>
+                    <small>Build with <span class="fa fa-heart text-danger" aria-hidden="true"></span> by QcCoding, <span class="fa fa-github"></span> <a href="https://github.com/QcCoding">https://github.com/QcCoding</a></small>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            jQuery.showSnackBar = function (data) {
+
+                $('#snackbar').text(data.message);
+                if (data.error != null) {
+                    $('#snackbar').addClass('alert-danger');
+                    $('#snackbar').removeClass('alert-success')
+                } else {
+                    $('#snackbar').removeClass('alert-danger')
+                    $('#snackbar').addClass('alert-success')
+                }
+                $('#snackbar').show();
+
+
+                setTimeout(function () {
+                    $('#snackbar').hide();
+                }, 2000);
+            };
+
+            jQuery.wakeUpComputerByName = function (macAddress) {
+                $.ajax({
+                    type: "GET",
+                    url: "/wol/wakeup?id=" + macAddress,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        $.showSnackBar(data);
+                    },
+                    error: function (data, err) {
+                        $.showSnackBar(data);
+                        console.error(data);
+                    }
+                })
+            };
+        });
+    </script>
+</body>
+</html>
